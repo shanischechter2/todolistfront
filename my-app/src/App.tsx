@@ -3,21 +3,17 @@ import Header from "./components/Header";
 import Button from "./components/Button";
 import Userbar from "./components/userbar";
 import TaskItem from "./components/TaskItem";
-// import Login from './Login';
-// import main from './main';
+import Isrelevent from "./components/Isrelevent";
+import { v4 as uuidv4 } from 'uuid';
 import "./index.css";
 
 const API_URL = "http://localhost:5000";
 
 const App: React.FC = () => {
+  const [showRelevant, setShowRelevant] = useState(true);
 
- // const [tasks, setTasks] = useState<any[]>([]); 
-  const [taskescreacte, setTaskscreats] = useState<any[]>([]);
-  const [tasketimeout, setTaskstimeout] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<any[]>([]);
 
-
-const [tasks, setTasks] = useState<any[]>([]);
-//  const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -33,8 +29,7 @@ const [tasks, setTasks] = useState<any[]>([]);
         }
 
         const data = await res.json();
-        setTasks(data); // Store tasks in state
-        console.log("Fetched tasks:", data);
+        setTasks(data.filter((task) => !showRelevant ? !task.isrelevant : task.isrelevant));
       } catch (error) {
         console.error("Error fetching tasks:", error);
       }
@@ -44,11 +39,30 @@ const [tasks, setTasks] = useState<any[]>([]);
     fetchTasks();
   }, []);
 
-  const handleAddTask = (newTask: { task_id: string; taskbody: string; timecreated: string; timeout: string; isComplete: boolean }) => {
-    setTasks((prevTasks) => [...prevTasks, newTask]); 
+  const handleAddTask = (newTask: { task_id: string; taskbody: string; timecreated: string; timeout: string; isComplete: boolean; isrelevant: boolean }) => {
+    const b = newTask.task_id;
+    const taskWithId = { ...newTask, b: uuidv4() };
+    setTasks((prevTasks) => [taskWithId, ...prevTasks]);
   };
-  
-  
+
+
+  const handleToggleRelevance = (isRelevant: boolean) => {
+    setShowRelevant(isRelevant);
+
+    if (isRelevant) {
+      setTasks((prevTasks) => prevTasks.filter((task) => task.isrelevant));
+    } else {
+
+      fetch(`${API_URL}/getalltasksbyuser`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      })
+        .then((res) => res.json())
+        .then((data) => setTasks(data))
+        .catch((error) => console.error("Error fetching tasks:", error));
+    }
+  };
 
 
   const handleDeleteTask = async (task: { task_id: string }) => {
@@ -57,88 +71,122 @@ const [tasks, setTasks] = useState<any[]>([]);
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({task :task.task_id}),
-      
-       });
-      console.log(task.task_id)
+        body: JSON.stringify({ task: task.task_id }),
+
+      });
+
       if (!res.ok) {
         throw new Error(`Server Error: ${res.status}`);
       }
 
       const data = await res.json();
-     
+
       setTasks((prevTasks) => prevTasks.filter((t) => t.task_id !== task.task_id));
-      console.log("Fetched tasks:", data);
+
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
   };
 
-  const onNunrelevet = (index: number) => {
-    setTasks(tasks.filter((_, i) => i !== index-1)); 
-  };
 
-  const handleCompleteTask = async (task: { task_id: string,iscomplete:boolean }) => {
- 
+  const handleCompleteTask = async (task: { task_id: string, iscomplete: boolean }) => {
+
     try {
-      console.log("ttttt:"+task.iscomplete)
-          const updatedTasks = tasks.map((t) =>
-            t.task_id === task.task_id ? { ...t, iscomplete: !t.iscomplete } : t
-          );
-      
-          setTasks(updatedTasks); 
-      
-          const iscomstring = !task.iscomplete ? "true" : "false";
-      
-       
-  
-          const res = await fetch(`${API_URL}/updatecheck/${task.task_id}/${iscomstring}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-           // body: JSON.stringify({ task_id: task.task_id, iscom: newIsCompleted }), // Send correct data
-          });
-  
-          if (!res.ok) {
-            throw new Error(`Server Error: ${res.status}`);
-          }
-  
-          const data = await res.json();
-          console.log("Updated task:", data);
-        } catch (error) {
-          console.error("Error updating task:", error);
-        }
+      const updatedTasks = tasks.map((t) =>
+        t.task_id === task.task_id ? { ...t, iscomplete: !t.iscomplete } : t
+      );
+
+      setTasks(updatedTasks);
+
+      const iscomstring = !task.iscomplete ? "true" : "false";
+
+
+
+      const res = await fetch(`${API_URL}/updatecheck/${task.task_id}/${iscomstring}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+
+      });
+
+      if (!res.ok) {
+        throw new Error(`Server Error: ${res.status}`);
+      }
+
+      const data = await res.json();
+
+    } catch (error) {
+      console.error("Error updating task:", error);
+    }
   };
-  
+  const handleRelevant = async (task: { task_id: string; isrelevant: boolean }) => {
+    try {
+      setTasks((prevTasks) =>
+        prevTasks.map((t) =>
+          t.task_id === task.task_id ? { ...t, isrelevant: !t.isrelevant } : t
+        )
+      );
+      const isRelevant = !task.isrelevant ? "true" : "false";
 
+      const res = await fetch(`${API_URL}/updatrelevant/${task.task_id}/${isRelevant}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        throw new Error(`Server Error: ${res.status}`);
+      }
+      setTasks((prevTasks) => [...prevTasks]);
+
+
+    } catch (error) {
+      console.error("Error updating relevance:", error);
+    }
+  };
+  const handleRelevantalert = async (task: { task_id: string; isrelevant: boolean }) => {
+
+    const confirmed = window.confirm("Are you sure you want to move this task?");
     
+    if (confirmed) {
+      handleRelevant(task);
+    } else {
+    }
+  };
 
 
-  
   return (
     <div>
       <div>
-        <Userbar 
-       />
+        <Userbar
+        />
       </div>
       <div className="headerdiv">
         <Header />
-       
+
       </div>
       <div className="entertaskesdiv">
         <Button onAddTask={handleAddTask} />
+        <Isrelevent onToggle={handleToggleRelevance} />
+
       </div>
-      <div className="task-list">
-        {tasks.map((task) => (
-          <TaskItem
-            key={task.task_id}
-            task={task}
-            //checkbox={task}
-            onDelete={() => handleDeleteTask(task)}
-            onComplete={() => handleCompleteTask(task)}
-           // onNunrelevet={() => onNunrelevet(task.task_id)}
-          />
-        ))}
+
+      <div className="task-toggle-container">
+
+        <div className="task-list">
+          {tasks
+            .filter((task) => showRelevant ? task.isrelevant : !task.isrelevant)
+            .map((task) => (
+              <TaskItem
+                key={task.task_id}
+                task={task}
+                onDelete={() => handleDeleteTask(task)}
+                onComplete={() => handleCompleteTask(task)}
+                onrelevant={() => handleRelevantalert(task)}
+              />
+
+            ))}
+        </div>
       </div>
     </div>
   );

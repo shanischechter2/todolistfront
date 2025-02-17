@@ -10,25 +10,27 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   
   const handleSignIn = async () => {
+    try {
+      
     const res = await fetch(`${API_URL}/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email, password }),
     });
     const data = await res.json();
-    console.log(data);
 
+    console.log(data)
     if (data.user) {
       alert("Signup successful! Please log in.");
       navigate("/login");
-    } else {
-      alert("Signup failed. Try again.");
+    }else if(data.error){
+      alert(data.error)
+    }
+  
+   }catch (error) {
+      console.error("Error fetching tasks:", error);
     }
   };
-    // const handletoLogin = () => {
-      
-    //     navigate("/login");
-    //   };
       return (
         <div className="headerdiv">
           <div>

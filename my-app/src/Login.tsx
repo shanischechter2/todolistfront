@@ -14,15 +14,14 @@ const Login = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include", 
+      credentials: "include",
       body: JSON.stringify({ email, password }),
     });
     const data = await res.json();
 
     if (data.token) {
-      localStorage.setItem("token", data.token); // Store token
-      alert("Login successful!");
-      navigate("/app"); // Redirect to To-Do List
+      localStorage.setItem("token", data.token);
+      navigate("/app");
     } else {
       alert("Login failed. Check your email or password.");
     }
@@ -35,17 +34,16 @@ const Login = () => {
       </div>
       <div className="entertaskesdiv">
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleLogin}>Login</button>
-     
+        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <button onClick={handleLogin}>Login</button>
+
       </div>
-       <div className="pathtosignin">
+      <div className="pathtosignin">
         <a onClick={() => navigate("/signin")}>Don't have an account? Sign up here</a>
-       </div>
+      </div>
     </div>
   );
 };
 
-    
+
 export default Login;
-    

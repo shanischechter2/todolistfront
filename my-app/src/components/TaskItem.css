@@ -12,24 +12,35 @@
   height: auto;
   min-height: 50px;
   width: 100%;
-  max-width: 600px; 
+  max-width: 560px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.task-card2 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background: linear-gradient(135deg, #c2e7f0, #d9e2ec);
+  padding: 20px;
+  margin: 2px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+  font-size: 18px;
+  transition: 0.3s ease-in-out;
+  height: auto;
+  min-height: 50px;
+  width: 100%;
+  max-width: 800px;
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
 }
 
 
-.task-card > :nth-child(2) {
-  flex: 1; 
-  min-width: 0; 
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  white-space: normal;
-  margin-right: 30px;
-}
 
-
-.warning{
+.warning {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -43,39 +54,62 @@
   height: auto;
   min-height: 50px;
   width: 100%;
-  max-width: 600px; 
+  max-width: 600px;
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
-} 
-/* .warning {
-  background: url("") no-repeat left center;
-  background-size: 20px 20px;
-  padding-left: 30px; /* Space for the icon */
+}
 
-  .warning #taskb::before {
-    content: "!";
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px; /* Circle size */
-    height: 20px;
-    border-radius: 50%; /* Makes it a circle */
-    background-color: red; /* Circle color */
-    color: white; /* Exclamation mark color */
-    font-weight: bold;
-    font-size: 14px;
-    margin-right: 10px;
-  }
- 
-  
+.prewarning {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background: linear-gradient(135deg, #eb6126, #f86c50);
+  padding: 20px;
+  margin: 2px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+  font-size: 18px;
+  transition: 0.3s ease-in-out;
+  height: auto;
+  min-height: 50px;
+  width: 100%;
+  max-width: 600px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 
+}
+
+.task-card> :nth-child(2) {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: normal;
+  margin-right: 30px;
+}
+
+.warning #taskb::before,
+.prewarning #taskb::before {
+  content: "!";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  margin-right: 10px;
+}
 
 .task-card:hover {
   transform: translateY(-2px);
   box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.3);
 }
-
 
 .task-card p {
   flex: 1;
@@ -84,14 +118,12 @@
   color: #333;
 }
 
-
 .task-card.completed p {
   text-decoration: line-through;
   color: #757575;
 }
 
 .delete-btn {
-
   color: rgb(5, 5, 5);
   border: none;
   padding: 8px 12px;
@@ -100,7 +132,6 @@
   margin: 2px;
   transition: 0.3s;
   background-color: transparent;
-
 }
 
 .delete-btn:hover {
@@ -115,5 +146,14 @@
   transition: 0.3s;
 }
 
-
-  
+.relevant-btn {
+  color: rgb(5, 5, 5);
+  content: "→→";
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 2px;
+  transition: 0.3s;
+  background-color: transparent;
+}

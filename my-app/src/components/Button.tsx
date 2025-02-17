@@ -6,7 +6,7 @@ const API_URL = "http://localhost:5000";
 
 
 type ButtonProps = {
-  onAddTask: (task: { task_id: string; taskbody: string; timecreated: string; timeout: string; isComplete: boolean }) => void;
+  onAddTask: (task: { task_id: string; taskbody: string; timecreated: string; timeout: string; isComplete: boolean,isrelevant: boolean}) => void;
 };
 
 const Button: React.FC<ButtonProps> = ({ onAddTask }) => {
@@ -16,38 +16,41 @@ const Button: React.FC<ButtonProps> = ({ onAddTask }) => {
  const API_URL = "http://localhost:5000";
 
 const handleAddTask = async () => {
-  
+
   try {
+    const formatDate = (date: Date) => {
+      return date.toISOString().split("T")[0];
+    };
+  
+    const selectedTimeOut = TimeOut || formatDate(new Date());
+    console.log(selectedTimeOut);
+
     const res = await fetch(`${API_URL}/addtask`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ taskbody, TimeOut }),
+      body: JSON.stringify({ taskbody, timeOut : selectedTimeOut }),
     });
-
-    console.log("Response status:", res.status);
     if (!res.ok) {
       const errorText = await res.text();
       throw new Error(`Server Error: ${res.status} - ${errorText}`);
     }
    
     const data = await res.json();
+
     const formattedTask = {
-      task_id: data.task_id || Date.now().toString(), // Generate temporary ID if missing
+      task_id: data.rows[0].task_id,
       taskbody: taskbody,
       timecreated: data.timecreated || new Date().toISOString(),
-      timeout: data.timeout || TimeOut,
-      isComplete: data.isComplete || false, // Default to false if missing
+      timeout: data.timeout || TimeOut || new Date().toISOString(),
+      isComplete: data.isComplete || false,
+      isrelevant:data.isRelevant || true
     };
-
-    console.log("New task added:", formattedTask);
-
     onAddTask(formattedTask);
 
     setTask("");
     setdate("");
 
-    console.log("Server response:", data);
   } catch (error) {
     console.error("Error adding task:", error);
   }
