@@ -1,30 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import {Api_user_repository} from './User_API_Repository';
 const API_URL = "http://localhost:5000";
 
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");// REACT CONTEXT
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    const res = await fetch(`${API_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await res.json();
-
-    if (data.token) {
-      localStorage.setItem("token", data.token);
-      navigate("/app");
-    } else {
-      alert("Login failed. Check your email or password.");
-    }
+    const response = await Api_user_repository.login({ email, password} );
+   
+         if (response.error) {
+            alert(response.error); // Show error in an alert popup
+            return;
+          }
+      
+          navigate("/app");
+      
+      
   };
 
   return (

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./isrelenet.css";
-
+import {TaskItemProps as Task} from "../task";
 type IsreleventProps = {
   onToggle: (isRelevent: boolean) => void;
 };

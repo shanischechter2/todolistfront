@@ -17,7 +17,6 @@
   overflow-wrap: break-word;
   white-space: normal;
 }
-
 .task-card2 {
   display: flex;
   flex-direction: row;
@@ -59,8 +58,7 @@
   overflow-wrap: break-word;
   white-space: normal;
 }
-
-.prewarning {
+.prewarning{
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -80,8 +78,7 @@
   white-space: normal;
 
 }
-
-.task-card> :nth-child(2) {
+.task-card > :nth-child(2) {
   flex: 1;
   min-width: 0;
   overflow-wrap: break-word;
@@ -89,8 +86,7 @@
   white-space: normal;
   margin-right: 30px;
 }
-
-.warning #taskb::before,
+.warning #taskb::before ,
 .prewarning #taskb::before {
   content: "!";
   display: inline-flex;
@@ -142,11 +138,10 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: #88d38a;
+  accent-color: #d388d3;
   transition: 0.3s;
 }
-
-.relevant-btn {
+.relevant-btn{
   color: rgb(5, 5, 5);
   content: "→→";
   border: none;

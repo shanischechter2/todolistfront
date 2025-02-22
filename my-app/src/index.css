@@ -1,5 +1,5 @@
 body {
-  background-color: #f5f5f5;
+  background-color:  rgb(249, 192, 239);
   /* Light background instead of an image */
 }
 
@@ -65,13 +65,14 @@ li {
 
 .task-list {
   max-width: 600px;
-  margin: 20px auto;
+  margin: 0px auto;
   display: flex;
   flex-direction: column;
   gap: 10px;
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
+  align-items: center;
 }
 
 .pathtosignin {

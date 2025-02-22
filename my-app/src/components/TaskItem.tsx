@@ -1,32 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "./TaskItem.css";
+import {TaskItemProps as Task} from "../task";
 
 type TaskItemProps = {
-  task: {
-    task_id: string;
-    taskbody: string;
-    timecreated: string;
-    timeout: string;
-    iscomplete: boolean;
-    isrelevant: boolean;
-  };
+  task: Task;
   onDelete: () => void;
   onComplete: () => void;
-  onrelevant: () => void;
+  onRelevant: () => void;
 };
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onComplete, onrelevant }) => {
-  const [isCompleted, setIsCompleted] = useState(task.iscomplete);
-  const [isRelevantd, setIsR] = useState(task.isrelevant);
-  const [time, setime] = useState("");
+const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onComplete, onRelevant }) => {
 
-  useEffect(() => {
-    setIsR(task.isrelevant);
-  }, [task.isrelevant]);
 
-  const hendeletime = (task: { timeout: string; timecreated: string, iscomplete: boolean }) => {
+  const hendeletime = (task:Task) => {
     const timeoutDate = new Date(task.timeout);
-    const createdDate = new Date(task.timecreated);
+ 
     const now = new Date();
 
 
@@ -37,28 +25,39 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onComplete, onrelev
 
 
 
-    const t = timeDifferencedays.toString();
-
-    let classname = "task-card2";
-
-    if (timeDifferencedays <= 0 && !task.iscomplete) {
-      classname = "warning";  
-    } else if (timeDifferencedays <= 1 && !task.iscomplete) {
-      classname = "prewarning"; 
-    }
-
-    const finael = 'days to finish:' + t;
+    const classname = (() => {
+      switch (true) {
+        case timeDifferencedays <= 0 && !task.iscomplete:
+          return "warning";
+        case timeDifferencedays <= 1 && !task.iscomplete:
+          return "prewarning";
+        default:
+          return "task-card2";
+      }
+    })();
+   const abs_time_left_for_task=Math.abs(timeDifferencedays);
+    const string_for_task = (() => {
+      switch (true) {
+        case timeDifferencedays === 0 :
+          return "you have today to finish your task";
+          case timeDifferencedays < 0 :
+            return `you had needed to finish your task ${abs_time_left_for_task} days ago`
+         default:
+          return `you have ${timeDifferencedays} left to finish your task`;
+      }
+    })();
+ 
     return {
-      daysLeft: `Days to finish: ${timeDifferencedays}`,
+      daysLeft: `${string_for_task}`,
       classname,
     };
   }
 
-  const c = hendeletime(task);
-  const d = task.iscomplete;
+  const getclass = hendeletime(task);//WTFFFFFFFFFFFFFFFFFFF
+  const iscomleate = task.iscomplete;
   return (
-    <div className={c.classname}>
-      <div className={`task-card ${d ? "completed" : ""}`}>
+    <div className={getclass.classname}>
+      <div className={`task-card ${iscomleate ? "completed" : ""}`}>
         <input
           type="checkbox"
           className="task-checkbox"
@@ -67,9 +66,9 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onComplete, onrelev
         />
         <p id="taskb">{task.taskbody}</p>
 
-        <p> {c.daysLeft}</p>
+        <p> {getclass.daysLeft}</p>
         <button className="delete-btn" onClick={onDelete}>X</button>
-        <button className="relevant-btn" onClick={() => { onrelevant(); }}>→→</button>
+        <button className="relevant-btn" onClick={() => { onRelevant(); }}>→→</button>
       </div>
     </div>
 

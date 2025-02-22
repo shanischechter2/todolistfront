@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import {Api_user_repository} from './User_API_Repository';
+import {signUpTests} from './SignupTests';
+import {User} from './user'
 
 const API_URL = "http://localhost:5000";
 
@@ -10,26 +13,23 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   
   const handleSignIn = async () => {
-    try {
+    const errorMessage = signUpTests.tests({username,email,password });
+    
+    if (errorMessage) {
+      alert(errorMessage); 
+      return;
+    } 
       
-    const res = await fetch(`${API_URL}/signup`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
-    });
-    const data = await res.json();
-
-    console.log(data)
-    if (data.user) {
-      alert("Signup successful! Please log in.");
-      navigate("/login");
-    }else if(data.error){
-      alert(data.error)
-    }
+      const response = await Api_user_repository.signUp({username, email, password} );
   
-   }catch (error) {
-      console.error("Error fetching tasks:", error);
-    }
+      if (response.error) {
+        alert(response.error); 
+        return;
+      }
+  
+      alert("Sign-up successful!");
+      navigate("/login");
+    
   };
       return (
         <div className="headerdiv">

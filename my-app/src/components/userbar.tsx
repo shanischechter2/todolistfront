@@ -1,38 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./userBar.css";
-
-
+import {Api_user_repository} from '../User_API_Repository';
 
 const API_URL = "http://localhost:5000";
 
 const Userbar: React.FC = () => {
   const [username, setUsername] = useState("");
 
-
   useEffect(() => {
     const handleusebar = async () => {
-      try {
-        const res = await fetch(`${API_URL}/getusername`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-
-        });
-
-        if (!res.ok) {
-          const errorText = await res.text();
-          throw new Error(`Server Error: ${res.status} - ${errorText}`);
-        }
-
-
-        const data = await res.json();
-        setUsername(data.username);
-
-      } catch (error) {
-        console.error("Error adding task:", error);
-      }
-    };
-    handleusebar(); 
+      const username2 = await Api_user_repository.get_user_name();
+      setUsername(username2??"");
+    }
+      handleusebar(); 
   }, []);
   return (
     <header>
