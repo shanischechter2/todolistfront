@@ -1,29 +1,16 @@
-import React, { useState, useEffect } from "react";
-import "./TaskItem.css";
-import {TaskItemProps as Task} from "../task";
+import React from "react";
+import "./TaskItem.css"; 
+import { TaskItemProps as Task } from "../Task/task";
+import { useTaskContext } from "../Task/TaskContext";
 
-type TaskItemProps = {
-  task: Task;
-  onDelete: () => void;
-  onComplete: () => void;
-  onRelevant: () => void;
-};
+const TaskItem: React.FC<{ task: Task }> = ({ task }) => {
+  const { deleteTask, completeTask, toggleTaskRelevance } = useTaskContext();
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onComplete, onRelevant }) => {
-
-
-  const hendeletime = (task:Task) => {
+  const handleTimeStatus = (task: Task) => {
     const timeoutDate = new Date(task.timeout);
- 
     const now = new Date();
-
-
     const timeDifferenceMs = timeoutDate.getTime() - now.getTime();
-
-
-    const timeDifferencedays = (Math.floor((timeDifferenceMs / (1000 * 60 * 60 * 24))) + 1);
-
-
+    const timeDifferencedays = Math.floor(timeDifferenceMs / (1000 * 60 * 60 * 24)) + 1;
 
     const classname = (() => {
       switch (true) {
@@ -35,47 +22,40 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onComplete, onRelev
           return "task-card2";
       }
     })();
-   const abs_time_left_for_task=Math.abs(timeDifferencedays);
-    const string_for_task = (() => {
+
+    const absTimeLeft = Math.abs(timeDifferencedays);
+    const message = (() => {
       switch (true) {
-        case timeDifferencedays === 0 :
-          return "you have today to finish your task";
-          case timeDifferencedays < 0 :
-            return `you had needed to finish your task ${abs_time_left_for_task} days ago`
-         default:
-          return `you have ${timeDifferencedays} left to finish your task`;
+        case timeDifferencedays === 0:
+          return "You have today to finish your task";
+        case timeDifferencedays < 0:
+          return `You needed to finish your task ${absTimeLeft} days ago`;
+        default:
+          return `You have ${timeDifferencedays} days left to finish your task`;
       }
     })();
- 
-    return {
-      daysLeft: `${string_for_task}`,
-      classname,
-    };
-  }
 
-  const getclass = hendeletime(task);//WTFFFFFFFFFFFFFFFFFFF
-  const iscomleate = task.iscomplete;
+    return { daysLeft: message, classname };
+  };
+
+  const getClass = handleTimeStatus(task);
+
   return (
-    <div className={getclass.classname}>
-      <div className={`task-card ${iscomleate ? "completed" : ""}`}>
+    <div className={getClass.classname}>
+      <div className={`task-card ${task.iscomplete ? "completed" : ""}`}>
         <input
           type="checkbox"
           className="task-checkbox"
           checked={task.iscomplete}
-          onChange={onComplete}
+          onChange={() => completeTask(task)}
         />
         <p id="taskb">{task.taskbody}</p>
-
-        <p> {getclass.daysLeft}</p>
-        <button className="delete-btn" onClick={onDelete}>X</button>
-        <button className="relevant-btn" onClick={() => { onRelevant(); }}>→→</button>
+        <p>{getClass.daysLeft}</p>
+        <button className="delete-btn" onClick={() => deleteTask(task)}>X</button>
+        <button className="relevant-btn" onClick={() => toggleTaskRelevance(task)}>→→</button>
       </div>
     </div>
-
   );
 };
 
 export default TaskItem;
-
-
-

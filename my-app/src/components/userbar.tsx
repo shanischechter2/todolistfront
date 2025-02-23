@@ -1,27 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./userBar.css";
-import {Api_user_repository} from '../User_API_Repository';
-
-const API_URL = "http://localhost:5000";
+import { useUserContext } from "../user/UserContext";
 
 const Userbar: React.FC = () => {
-  const [username, setUsername] = useState("");
+  const { user, logout } = useUserContext();
 
-  useEffect(() => {
-    const handleusebar = async () => {
-      const username2 = await Api_user_repository.get_user_name();
-      setUsername(username2??"");
-    }
-      handleusebar(); 
-  }, []);
   return (
     <header>
-      <h1 className="userbarh1">Welcome {username}</h1>
-
+      <h1 className="userbarh1">Welcome {user ? user.username : "Guest"}</h1>
+      {user && <button onClick={logout}>Logout</button>}
     </header>
-
   );
-
 };
 
 export default Userbar;

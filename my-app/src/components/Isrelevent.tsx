@@ -1,26 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import "./isrelenet.css";
-import {TaskItemProps as Task} from "../task";
-type IsreleventProps = {
-  onToggle: (isRelevent: boolean) => void;
-};
+import { useTaskContext } from "../Task/TaskContext";
 
-const Isrelevent: React.FC<IsreleventProps> = ({ onToggle }) => {
-  const [isRelevent, setIsRelevent] = useState(true);
+const Isrelevent: React.FC = () => {
+  const { showRelevant, toggleRelevance } = useTaskContext();
 
   const handleToggle = () => {
-    const newState = !isRelevent;
-    setIsRelevent(newState);
-    onToggle(newState);
+    toggleRelevance(!showRelevant);
   };
 
   return (
     <div className="releventcontainer">
       <label className="toggle-switch">
-        <input type="checkbox" checked={isRelevent} onChange={handleToggle} />
+        <input type="checkbox" checked={showRelevant} onChange={handleToggle} />
         <span className="slider"></span>
       </label>
-      <p>{isRelevent ? "Relevent tasks" : "UnRelevent tasks"}</p>
+      <p>{showRelevant ? "Relevant tasks" : "Irrelevant tasks"}</p>
     </div>
   );
 };

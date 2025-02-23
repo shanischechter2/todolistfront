@@ -1,6 +1,5 @@
 body {
-  background-color:  rgb(249, 192, 239);
-  /* Light background instead of an image */
+  background-color:  rgb(252, 228, 248);
 }
 
 .headerdiv,
@@ -9,6 +8,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  top: 50px;
 }
 
 h1 {
@@ -54,14 +54,18 @@ li {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.task-toggle-container {
+.task-list-container {
   display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  justify-content: flex-start;
-  padding: 20px;
-  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+  height: 500px;
+  width: 100%;
+  max-width: 600px;
+  padding: 10px;
+  margin: 0 auto;
 }
+
 
 .task-list {
   max-width: 600px;

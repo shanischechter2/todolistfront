@@ -57,7 +57,6 @@ export class Api_user_repository{
 
 
       const data = await res.json();
-     // console.log(data);
      const username=data.username as string
       return username;
 

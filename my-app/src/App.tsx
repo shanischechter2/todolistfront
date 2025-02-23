@@ -1,22 +1,22 @@
 import React from "react";
 import Header from "./components/Header";
-import Userbar from "./components/Userbar";
-import { AppProvider } from "./AppContext"; 
-import TaskManager from "./components/TaskManager";
+import Userbar from "./components/userbar";
+import { TaskProvider } from "./Task/TaskContext";
+import TaskManager from "./Task/TaskManager";
+import { UserProvider } from "./user/UserContext"; 
 import "./index.css";
 
 const App: React.FC = () => {
   return (
-    <div>
+    <UserProvider> 
       <Userbar />
       <div className="headerdiv">
         <Header />
       </div>
-      <AppProvider>
+      <TaskProvider>
         <TaskManager />
-      </AppProvider>
-      
-    </div>
+      </TaskProvider>
+    </UserProvider>
   );
 };
 

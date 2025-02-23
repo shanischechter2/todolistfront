@@ -3,7 +3,7 @@ const API_URL = "http://localhost:5000";
 export class Api_task_repository {
     static async gettasks() {
         try {
-            const res = await fetch(`${API_URL}/getalltasksbyuser`, {//kovez nifrad
+            const res = await fetch(`${API_URL}/getalltasksbyuser`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -15,7 +15,7 @@ export class Api_task_repository {
 
             const data = await res.json();
             return data;
-            // setTasks(data.filter((task) => !showRelevant ? !task.isrelevant : task.isrelevant));
+          
         } catch (error) {
             console.error("Error fetching tasks:", error);
         }
@@ -77,7 +77,7 @@ export class Api_task_repository {
               if (!res.ok) { 
                 throw new Error(`Server Error: ${res.status}`);
               }
-             // setTasks((prevTasks) => [...prevTasks]);
+         
              const data = await res.json();
              return data;
             } catch (error) {

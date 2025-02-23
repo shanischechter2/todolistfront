@@ -1,4 +1,4 @@
-import {User} from './user'
+import {User} from './user/user'
 
 export class signUpTests{
     static isValidPassword(password: string): boolean {
