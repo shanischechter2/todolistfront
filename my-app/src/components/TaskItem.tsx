@@ -1,6 +1,7 @@
 import React from "react";
-import "./TaskItem.css"; 
-import { TaskItemProps as Task } from "../Task/task";
+
+import "../css-for-components/TaskItem.css"
+import {  Task } from "../Task/task";
 import { useTaskContext } from "../Task/TaskContext";
 
 const TaskItem: React.FC<{ task: Task }> = ({ task }) => {
@@ -19,7 +20,7 @@ const TaskItem: React.FC<{ task: Task }> = ({ task }) => {
         case timeDifferencedays <= 1 && !task.iscomplete:
           return "prewarning";
         default:
-          return "task-card2";
+          return "task-card-continer";
       }
     })();
 

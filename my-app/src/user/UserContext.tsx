@@ -44,6 +44,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async () => {
     try {
       const response = await Api_user_repository.login({ email, password });
+      console.log( email, password);
       if (response.error) {
         alert(response.error);
         return;

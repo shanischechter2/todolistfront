@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  background: linear-gradient(135deg, #c2e7f0, #d9e2ec);
+  background: linear-gradient(135deg, #f0fcfe, #d9e2ec);
   padding: 20px;
   margin: 2px;
   border-radius: 12px;
@@ -17,11 +17,11 @@
   overflow-wrap: break-word;
   white-space: normal;
 }
-.task-card2 {
+.task-card-continer {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  background: linear-gradient(135deg, #c2e7f0, #d9e2ec);
+  background: linear-gradient(135deg, #7e9aa0, #d9e2ec);
   padding: 20px;
   margin: 2px;
   border-radius: 12px;
@@ -129,15 +129,16 @@
   background-color: transparent;
 }
 
-.delete-btn:hover {
-  background: #d3d3d3;
+.delete-btn:hover,.relevant-btn:hover
+ {
+  background: #a5a5a5;
 }
 
 .task-checkbox {
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: #d388d3;
+  accent-color: #fa7cd2;
   transition: 0.3s;
 }
 .relevant-btn{

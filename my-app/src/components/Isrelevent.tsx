@@ -1,5 +1,6 @@
 import React from "react";
-import "./isrelenet.css";
+
+import "../css-for-components/isrelenet.css";
 import { useTaskContext } from "../Task/TaskContext";
 
 const Isrelevent: React.FC = () => {

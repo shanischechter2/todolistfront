@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import React from "react";
+
 import { useUserContext } from "./user/UserContext";
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="container_for_antering">
       <div className="headerdiv">
         <h1>Login</h1>
       </div>

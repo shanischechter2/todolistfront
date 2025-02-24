@@ -1,15 +1,19 @@
 import React from "react";
-import "./userBar.css";
+
+ import "../css-for-components/userBar.css"
 import { useUserContext } from "../user/UserContext";
 
 const Userbar: React.FC = () => {
   const { user, logout } = useUserContext();
 
   return (
-    <header>
-      <h1 className="userbarh1">Welcome {user ? user.username : "Guest"}</h1>
-      {user && <button onClick={logout}>Logout</button>}
-    </header>
+    <header className="userbar">
+    <h1 className="userbar-title">
+      Welcome, <span className="username">{user ? user.username : "Guest"}</span>
+    </h1>
+    {user && <button className="logout-button" onClick={logout}>Logout</button>}
+  </header>
+
   );
 };
 

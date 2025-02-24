@@ -5,7 +5,7 @@ export class signUpTests{
         return password.length >= 6 && /\d/.test(password) && /[a-zA-Z]/.test(password);
       }
     
-      static tests(user: User): string | null {
+      static tests(user: Omit<User,"user_id">): string | null {
         if (!user.email || !user.password || !user.username) {
           return "All fields are required.";
         }

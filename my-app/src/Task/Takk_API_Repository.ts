@@ -1,11 +1,15 @@
+
+import { Task} from "./task";
+
 const API_URL = "http://localhost:5000";
 
-export class Api_task_repository {
-    static async gettasks() {
+export const Api_task_repository ={
+     async gettasks() {
         try {
             const res = await fetch(`${API_URL}/getalltasksbyuser`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
+            
                 credentials: "include",
             });
 
@@ -20,8 +24,8 @@ export class Api_task_repository {
             console.error("Error fetching tasks:", error);
         }
 
-    }
-    static async delete_task(task: { task_id: string }) {
+    },
+     async delete_task(task: Pick<Task,"task_id">) {
         try {
             const res = await fetch(`${API_URL}/deletetask/${task.task_id}`, {
                 method: "DELETE",
@@ -35,21 +39,22 @@ export class Api_task_repository {
                 throw new Error(`Server Error: ${res.status}`);
             }
 
-            const data = await res.json();
+            const data = await res.json() ;
             return data;
 
         } catch (error) {
             console.error("Error fetching tasks:", error);
         }
-    }
-    static async update_complete_for_task(task: { task_id: string, iscomplete: boolean }) {
+    },
+     async update_complete_for_task(task:  Pick<Task,"task_id"|"iscomplete">) {
         try {
-            const isComplete = !task.iscomplete;
+            console.log(task.iscomplete);
+            const iscomplete = !task.iscomplete;
             const res = await fetch(`${API_URL}/updatecheck/${task.task_id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
-                body: JSON.stringify({ isComplete }),
+                body: JSON.stringify({ iscomplete }),
 
 
             });
@@ -63,8 +68,8 @@ export class Api_task_repository {
         } catch (error) {
             console.error("Error updating task:", error);
         }
-    }
-    static async update_relevent_for_task(task: { task_id: string; isrelevant: boolean }) {
+    },
+     async update_relevent_for_task(task: Pick<Task,"task_id"|"isrelevant">) {
         try {
             const res = await fetch(`${API_URL}/updatrelevant/${task.task_id}`, {
                 method: "PUT",
@@ -84,20 +89,17 @@ export class Api_task_repository {
               console.error("Error updating relevance:", error);
             }
             
-    }
-    static async adding_task(taskbody: string, Timeout: string ) {
+    },
+    async adding_task(task: Pick<Task,"taskbody"|"timeout"> ) {
         try {
-            const formatDate = (date: Date) => {
-                return date.toISOString().split("T")[0];
-              };
+                  
+              const selectedTimeOut = task.timeout || new Date();
               
-              const selectedTimeOut = Timeout || formatDate(new Date());
-          
               const res = await fetch(`${API_URL}/addtask`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
-                body: JSON.stringify({ taskbody, timeOut : selectedTimeOut }),
+                body: JSON.stringify({ taskbody:task.taskbody, timeout : selectedTimeOut }),
               });
               if (!res.ok) {
                 const errorText = await res.text();
@@ -112,4 +114,4 @@ export class Api_task_repository {
         console.error("Error adding task:", error);
       }
     }
-}
+};

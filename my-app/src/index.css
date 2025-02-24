@@ -1,5 +1,7 @@
 body {
-  background-color:  rgb(252, 228, 248);
+  background-color: #f4f6f8;
+  font-family: 'Inter', sans-serif;
+  color: #2c3e50;
 }
 
 .headerdiv,
@@ -14,27 +16,38 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  color: rgb(152, 141, 150);
+  color: #34495e;
 }
 
 input {
-  padding: 8px;
-  margin-right: 10px;
+  padding: 12px;
+  border: 2px solid #bdc3c7;
+  border-radius: 8px;
   font-size: 16px;
+  transition: border-color 0.3s ease-in-out;
+  background: #ecf0f1;
+  color: #2c3e50;
+}
+
+input:focus {
+  border-color: #2980b9;
+  outline: none;
 }
 
 button {
-  padding: 8px 15px;
-  font-size: 16px;
-  background-color: rgb(230, 162, 218);
-  color: #000000;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 8px;
+  background-color: #3498db;
+  color: white;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  transition: all 0.3s;
 }
 
 button:hover {
-  background-color: rgb(182, 92, 167);
+  background-color: #2980b9;
+  transform: translateY(-2px);
 }
 
 ul {
@@ -43,10 +56,10 @@ ul {
 }
 
 li {
-  background: #f0f0f0;
+  background: #ecf0f1;
   padding: 12px;
   margin: 8px 0;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 18px;
   display: flex;
   justify-content: space-between;
@@ -58,14 +71,13 @@ li {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   height: 500px;
   width: 100%;
   max-width: 600px;
   padding: 10px;
   margin: 0 auto;
 }
-
 
 .task-list {
   max-width: 600px;
@@ -79,7 +91,8 @@ li {
   align-items: center;
 }
 
-.pathtosignin {
+.pathtosignin,
+.pathtologin {
   padding: 12px;
   margin: 20px;
   display: flex;
@@ -87,7 +100,8 @@ li {
   justify-content: center;
 }
 
-.signinplatforms {
+.signinplatforms,
+.entertaskesdiv {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -98,11 +112,14 @@ li {
 .signinplatforms button {
   margin: 5px;
 }
-
+.entertaskesdiv input,
+.entertaskesdiv button{
+  margin: 5px;
+}
 .todolistback {
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #e5c3c3, #d9e2ec);
+  background: linear-gradient(135deg, #85c1e9, #d7dbdd);
   padding: 20px;
   margin: 12px 0;
   border-radius: 12px;

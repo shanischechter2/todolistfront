@@ -4,7 +4,7 @@ import Userbar from "./components/userbar";
 import { TaskProvider } from "./Task/TaskContext";
 import TaskManager from "./Task/TaskManager";
 import { UserProvider } from "./user/UserContext"; 
-import "./index.css";
+// import "./index.css";
 
 const App: React.FC = () => {
   return (

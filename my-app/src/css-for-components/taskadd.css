@@ -1,0 +1,62 @@
+/* Task Section Styling */
+.task-section {
+    max-width: 450px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .task-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  /* Task Form */
+  .task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  /* Input Fields */
+  .task-input,
+  .task-date {
+    padding: 14px;
+    border: 1px solid #d1d9e6;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f9fafb;
+    color: #333;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s;
+  }
+  
+  .task-input:focus,
+  .task-date:focus {
+    border-color: #4a90e2;
+    box-shadow: 0px 0px 5px rgba(74, 144, 226, 0.5);
+    outline: none;
+  }
+  
+  /* Button */
+  .task-button {
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .task-button:hover {
+    background: #357ac9;
+    transform: translateY(-2px);
+  }
+  
